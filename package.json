@@ -1,0 +1,25 @@
+{
+  "name": "node-motto",
+  "version": "0.0.1",
+  "description": "A node package to get random motto.",
+  "main": "index.js",
+  "dependencies": {
+    "nodegrassex": "~0.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/XadillaX/node-motto.git"
+  },
+  "keywords": [
+    "motto"
+  ],
+  "author": "XadillaX",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/XadillaX/node-motto/issues"
+  }
+}
