@@ -6,16 +6,31 @@ exports.get = function(callback) {
 		if(status !== 200) {
 			data = default_motto;
 		} else {
-			var pos1 = data.indexOf("'");
-			var pos2 = data.indexOf("'", pos1 + 1);
-			data = data.substring(pos1 + 1, pos2);
+		    var reg = /new Array\(([\s\S]*?)\);.+/;
+            var temp = reg.exec(data);
+            if(temp.length !== 2) {
+                callback(default_motto);
+                return;
+            }
 
-			if(data[data.length - 1] !== "。" && data[data.length - 1] !== "！") {
-				data += "。";
-			}
-		}
+            var array = "[" + temp[1] + "]";
+            array = array.replace(/'/g, "\"");
+            try {
+                array = JSON.parse(array);
+            } catch(e) {
+                callback(default_motto);
+                return;
+            }
 
-		callback(data);
+            var idx = parseInt((array.length - 1) * Math.random());
+            if(array[idx][array[idx].length - 1] !== "。" &&
+                array[idx][array[idx].length - 1] !== "！" &&
+                array[idx][array[idx].length - 1] !== "？") {
+                array[idx] += "。";
+            }
+            callback(array[idx]);
+            return;
+        }
 	}, "utf8").on("error", function(e) {
 		callback(default_motto);
 	});
