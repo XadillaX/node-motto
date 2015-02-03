@@ -2,6 +2,8 @@
 
 A node package to get random motto.
 
+> The original is from http://www.verycd.com/.
+
 ## Usage
 
 Install it from `npm`:
