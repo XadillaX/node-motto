@@ -17,7 +17,9 @@ exports.get = function(callback) {
         charset: "utf8"
     }, function(data, status/**, respheader*/) {
         if(status !== 200) {
-            data = defaultMotto;
+            return callback(
+                new Error("Server returns a wrong status: " + status),
+                defaultMotto);
         } else {
             var reg = /new Array\(([\s\S]*?)\);.+/;
             var temp = reg.exec(data);
