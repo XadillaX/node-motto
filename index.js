@@ -1,38 +1,50 @@
-var spider = require("nodegrassex");
-var default_motto = "不自由，毋宁死。";
+require("sugar");
+var fJSON = require("fbbk-json");
+var lorem = require("unicode-lorem");
+var spidex = require("spidex");
+var defaultMotto = "不自由，毋宁死。";
+var baseUri = "http://www.verycd.com/statics/title.saying?{ran}";
 
+/**
+ * get a random motto
+ * @param {Function} callback the callback function
+ */
 exports.get = function(callback) {
-    spider.get("http://www.verycd.com/statics/title.saying?timestamp=" + Date.now() + Math.random(), function(data, status, respheader) {
+    spidex.get(baseUri.assign({
+        ran: lorem(10).unicode.join("")
+    }), {
+        timeout: 60000,
+        charset: "utf8"
+    }, function(data, status/**, respheader*/) {
         if(status !== 200) {
-            data = default_motto;
+            data = defaultMotto;
         } else {
             var reg = /new Array\(([\s\S]*?)\);.+/;
             var temp = reg.exec(data);
             if(temp.length !== 2) {
-                callback(default_motto);
-                return;
+                return callback(
+                    new Error("Wrong response data: " + data),
+                    defaultMotto);
             }
 
             var array = "[" + temp[1] + "]";
-            array = array.replace(/'/g, "\"");
             try {
-                array = JSON.parse(array);
+                array = fJSON.parse(array);
             } catch(e) {
-                callback(default_motto);
-                return;
+                return callback(
+                    new Error("Broken JSON data: " + e.message),
+                    defaultMotto);
             }
 
-            var idx = parseInt((array.length - 1) * Math.random());
-            if(array[idx][array[idx].length - 1] !== "。" &&
-                array[idx][array[idx].length - 1] !== "！" &&
-                array[idx][array[idx].length - 1] !== "？") {
+            var idx = Number.random(0, array.length - 1);
+            if("。！？.?!".indexOf(array[idx][array[idx].length - 1]) === -1) {
                 array[idx] += "。";
             }
-            callback(array[idx]);
-            return;
+
+            callback(undefined, array[idx]);
         }
-    }, "utf8").on("error", function(e) {
-        callback(default_motto);
+    }).on("error", function(e) {
+        callback(e, defaultMotto);
     });
 };
 

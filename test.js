@@ -1,7 +1,12 @@
 var motto = require("./");
 
-for(var i = 0; i < 50; i++) {
-	motto.get(function(text) {
-		console.log(text);
+function get() {
+    motto.get(function(err, text) {
+		console.log(err, text);
 	});
 }
+
+for(var i = 0; i < 50; i++) {
+    get();
+}
+

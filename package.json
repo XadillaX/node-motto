@@ -1,10 +1,13 @@
 {
   "name": "node-motto",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "description": "A node package to get random motto.",
   "main": "index.js",
   "dependencies": {
-    "nodegrassex": "~0.0.2"
+    "fbbk-json": "^0.0.6",
+    "spidex": "^2.0.1",
+    "sugar": "^1.4.1",
+    "unicode-lorem": "^0.1.1"
   },
   "devDependencies": {},
   "scripts": {
