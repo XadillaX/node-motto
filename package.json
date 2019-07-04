@@ -7,11 +7,14 @@
     "fbbk-json": "^0.0.6",
     "spidex": "^2.0.1",
     "sugar": "^1.4.1",
-    "unicode-lorem": "^0.1.1"
+    "unicode-lorem": "^0.1.1",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "node test.js"
+    "test": "node test.js",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -24,5 +27,6 @@
   "license": "BSD",
   "bugs": {
     "url": "https://github.com/XadillaX/node-motto/issues"
-  }
+  },
+  "snyk": true
 }
